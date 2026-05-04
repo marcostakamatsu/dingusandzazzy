@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="deck.css">
 <script type="application/json" id="speaker-notes">
 [
-  "Open by naming the pattern everyone in the room recognizes — websites that drift between strategy, copy, and design until nobody remembers what we agreed on in week one. This deck is our answer. It's not a tool pitch. It's a way of working that makes consistency the default and makes handoff feel boring in the best way. By the end of these twelve slides you'll know exactly how we run a website project with Claude Code, where the gates are, and why the order matters.",
+  "Open by naming the pattern everyone in the room recognizes — websites that drift between strategy, copy, and design until nobody remembers what we agreed on in week one. This deck is our answer. It's not a tool pitch. It's a way of working that makes consistency the default and makes handoff feel boring in the best way. By the end of these thirteen slides you'll know exactly how we run a website project with Claude Code, where the gates are, and why the order matters.",
   "These three failures account for most of the rework we've seen across recent website projects. They're not craft problems. They're sequencing problems. Copy gets approved after the hero is designed, so the hero gets rebuilt. A new Claude session starts cold, so the second page doesn't match the first. Inner pages get generated in parallel with the homepage, so the visual standard never settles. Every step of this workflow exists to close one of these gaps.",
   "This is the spine of the whole deck. Read it slowly. Plan properly. Approve copy and sitemap. Generate in code. Refine in the browser. Import to Figma at the end. The order is the principle. Out of order, you get rework. In order, you get a site that ships clean. Everything in the next eight slides is just the detail of how we hold this line.",
   "This is the spine card by card. Eight steps, eight gates, eight approvals. Notice the dashed ring above each step — that's the gate. We don't move forward until it's clean. Step five sits in gold because it's the gravity center of the project: the homepage we generate and refine becomes the visual standard for everything that follows. Each step has a clear input on the left and an artifact it produces on the right. That artifact is what the next step consumes.",
@@ -15,6 +15,7 @@
   "The trap is starting design while copy is still being written. Then design dictates copy length, copy gets squeezed, and we lose the voice. Reverse it. Sitemap first, copy second, system third — and only then do we generate. Mark sample copy clearly so we know what's load-bearing and what isn't. This is the slowest part of the workflow on paper and the fastest in practice, because it kills the rebuild loop later.",
   "Two things to land here. First, the context list isn't optional — every item gets loaded before we generate, every time. We've structured it as a config because that's what it is. Second, the model policy is an actual budget tool. Sonnet does the long mechanical tail of the project. Opus shows up for the homepage, the hero, the accessibility audit, the high-stakes pages. Starting on Sonnet and escalating is how we keep credits sane without compromising the moments that define the site.",
   "The shift in this step is small and important. We refine the homepage in code, in the browser, with Claude. Not in Figma. Figma comes at the end, as a delivery artifact. If we refine in Figma we end up rebuilding in code. The browser is where the page is real, so the browser is where we make it good. The homepage we approve here is the visual standard every inner page inherits. Generate, review, refine — that's the loop.",
+  "Step six is the import — not the design phase. Once the homepage is approved in code, we run HTML.to.design to bring it into Figma along with tokens, components, and the sitemap. From here, Figma becomes a living artifact that mirrors the code, not a place where we redesign. The rule on this slide is the one you want them to remember: code first, Figma second — never the other way around. Reverse it and we're back to the rebuild loop slide two warned about.",
   "This is the compounding play. Every project teaches us patterns. If those patterns live in a Slack thread or a designer's head, they're gone next month. If they live in two project-scoped skills, every page after the homepage starts ahead. The rule to remember: the live code beats the skill, always. Skills serve the implementation, not the other way around. Build the homepage well, then capture what you built.",
   "Don't gloss this slide. These are the six places we've watched projects break, and these are the named mitigations we've adopted in response. The pattern across all six is the same: a gate, a file, or a sequencing rule. Nothing exotic, nothing expensive. The workflow earns its keep by preventing these six failures, and that's most of the value.",
   "Close on the asks, not the recap. Two pilot projects, monthly review, and a simple measurement: rework hours and credit spend before and after. If those numbers move, the playbook is doing its job. If they don't, we revise it. The closing line is the same five-word principle from slide three — say it once more so the room leaves with it stuck in their heads. Plan, approve, generate, refine, import."
@@ -961,7 +962,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Dingus &amp; Zazzy</span>
     </div>
-    <span class="pageno">01 / 12</span>
+    <span class="pageno">01 / 13</span>
   </div>
 
   <div class="burst">
@@ -1011,7 +1012,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>The Problem</span>
     </div>
-    <span class="pageno">02 / 12</span>
+    <span class="pageno">02 / 13</span>
   </div>
 
   <div style="margin-top: 60px;">
@@ -1059,7 +1060,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Core principle</span>
     </div>
-    <span class="pageno">03 / 12</span>
+    <span class="pageno">03 / 13</span>
   </div>
 
   <div class="burst">
@@ -1086,7 +1087,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
 
   <div class="slide-foot" style="left: 140px; right: 140px;">
     <span>The spine of the playbook</span>
-    <span>03 / 12</span>
+    <span>03 / 13</span>
   </div>
 </section>
 
@@ -1097,7 +1098,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>The 8-step process</span>
     </div>
-    <span class="pageno">04 / 12</span>
+    <span class="pageno">04 / 13</span>
   </div>
 
   <div class="header">
@@ -1176,7 +1177,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 0 · Workspace Setup</span>
     </div>
-    <span class="pageno">05 / 12</span>
+    <span class="pageno">05 / 13</span>
   </div>
 
   <div class="top">
@@ -1212,7 +1213,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 1 · Strategy &amp; Planning</span>
     </div>
-    <span class="pageno">06 / 12</span>
+    <span class="pageno">06 / 13</span>
   </div>
 
   <div class="top">
@@ -1262,7 +1263,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Steps 2 &amp; 3 · Sitemap, Copy, Design System</span>
     </div>
-    <span class="pageno">07 / 12</span>
+    <span class="pageno">07 / 13</span>
   </div>
 
   <div>
@@ -1338,7 +1339,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" fill="#fff" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 4 · Build Setup</span>
     </div>
-    <span class="pageno">08 / 12</span>
+    <span class="pageno">08 / 13</span>
   </div>
 
   <div class="header">
@@ -1391,7 +1392,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 5 · Homepage Generation &amp; Refinement</span>
     </div>
-    <span class="pageno">09 / 12</span>
+    <span class="pageno">09 / 13</span>
   </div>
 
   <div>
@@ -1423,14 +1424,47 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 10 — Figma Import + Inner Pages & Scaling ───────────── -->
-<section class="slide s09" data-screen-label="10 Figma Import & Inner Pages">
+<!-- ───────────── SLIDE 10 — Figma Import / Handoff (Step 06) ───────────── -->
+<section class="slide s00" data-screen-label="10 Figma Import">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 6 · Figma Import / Handoff</span>
+    </div>
+    <span class="pageno">10 / 13</span>
+  </div>
+
+  <div class="top">
+    <div>
+      <div class="step-tag">Step 06 / 08 · Browser → Figma</div>
+      <h2 class="h-section">Bring the refined homepage<br>into Figma.</h2>
+      <p class="lede">Once the homepage is approved in code, we import it to Figma as the design source of truth — system, sitemap, and pages, all editable.</p>
+    </div>
+  </div>
+
+  <div class="check-grid">
+    <div class="check-item"><span class="ix">01</span>Run HTML.to.design on the approved homepage</div>
+    <div class="check-item"><span class="ix">02</span>Import design tokens (color, type, spacing)</div>
+    <div class="check-item"><span class="ix">03</span>Map components to Figma libraries</div>
+    <div class="check-item"><span class="ix">04</span>Stage the sitemap as Figma frames</div>
+    <div class="check-item"><span class="ix">05</span>Snapshot every approved page</div>
+    <div class="check-item"><span class="ix">06</span>Hand off the Figma file to the design team</div>
+  </div>
+
+  <div class="footer-pill">
+    <span class="gold-bolt" style="background:var(--color-golden-shower)"></span>
+    Code first, Figma second — never the other way around.
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 11 — Inner Pages & Scaling (Step 07) ───────────── -->
+<section class="slide s09" data-screen-label="11 Inner Pages & Scaling">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 7 · Inner Pages &amp; Scaling</span>
     </div>
-    <span class="pageno">10 / 12</span>
+    <span class="pageno">11 / 13</span>
   </div>
 
   <div class="header">
@@ -1472,14 +1506,14 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 11 — Risks ───────────── -->
-<section class="slide s10" data-screen-label="11 Risks & Mitigation">
+<!-- ───────────── SLIDE 12 — Risks ───────────── -->
+<section class="slide s10" data-screen-label="12 Risks & Mitigation">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Risks &amp; Mitigation</span>
     </div>
-    <span class="pageno">11 / 12</span>
+    <span class="pageno">12 / 13</span>
   </div>
 
   <div class="header">
@@ -1529,14 +1563,14 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 12 — Delivery & Next ───────────── -->
-<section class="slide s11" data-screen-label="12 Delivery & Next Steps">
+<!-- ───────────── SLIDE 13 — Delivery & Next ───────────── -->
+<section class="slide s11" data-screen-label="13 Delivery & Next Steps">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Final delivery &amp; next steps</span>
     </div>
-    <span class="pageno">12 / 12</span>
+    <span class="pageno">13 / 13</span>
   </div>
 
   <div class="top">
