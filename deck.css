@@ -2,7 +2,8 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-deck-stage { background: #000; }
+deck-stage { background: var(--color-light-af); }
+html, body { height: 100%; margin: 0; overflow: hidden; }
 
 section.slide {
   width: 1920px;

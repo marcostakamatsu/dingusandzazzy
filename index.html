@@ -6,10 +6,11 @@
 <link rel="stylesheet" href="deck.css">
 <script type="application/json" id="speaker-notes">
 [
-  "Open by naming the pattern everyone in the room recognizes — websites that drift between strategy, copy, and design until nobody remembers what we agreed on in week one. This deck is our answer. It's not a tool pitch. It's a way of working that makes consistency the default and makes handoff feel boring in the best way. By the end of these eleven slides you'll know exactly how we run a website project with Claude Code, where the gates are, and why the order matters.",
+  "Open by naming the pattern everyone in the room recognizes — websites that drift between strategy, copy, and design until nobody remembers what we agreed on in week one. This deck is our answer. It's not a tool pitch. It's a way of working that makes consistency the default and makes handoff feel boring in the best way. By the end of these twelve slides you'll know exactly how we run a website project with Claude Code, where the gates are, and why the order matters.",
   "These three failures account for most of the rework we've seen across recent website projects. They're not craft problems. They're sequencing problems. Copy gets approved after the hero is designed, so the hero gets rebuilt. A new Claude session starts cold, so the second page doesn't match the first. Inner pages get generated in parallel with the homepage, so the visual standard never settles. Every step of this workflow exists to close one of these gaps.",
   "This is the spine of the whole deck. Read it slowly. Plan properly. Approve copy and sitemap. Generate in code. Refine in the browser. Import to Figma at the end. The order is the principle. Out of order, you get rework. In order, you get a site that ships clean. Everything in the next eight slides is just the detail of how we hold this line.",
-  "This is the spine card by card. Six steps, six gates, six approvals. Notice the dashed ring above each step — that's the gate. We don't move forward until it's clean. Step five sits in gold because it's the gravity center of the project: the homepage we generate and refine becomes the visual standard for everything that follows. Each step has a clear input on the left and an artifact it produces on the right. That artifact is what the next step consumes.",
+  "This is the spine card by card. Eight steps, eight gates, eight approvals. Notice the dashed ring above each step — that's the gate. We don't move forward until it's clean. Step five sits in gold because it's the gravity center of the project: the homepage we generate and refine becomes the visual standard for everything that follows. Each step has a clear input on the left and an artifact it produces on the right. That artifact is what the next step consumes.",
+  "Step zero is the prerequisite the rest of the workflow assumes. Workspace Setup is about the machine and the tools — not the project. We install VS Code, install Claude Code, point it at the project folder, sort out repo access, confirm we have a terminal, the install command, the local preview command, and the deploy target. Frame it as a checkpoint, not a tutorial. If any of these nine items aren't true, generation later will fail in ways that look like Claude's fault but are really workspace gaps. Keep this slide tight — it's a gate, not a class.",
   "The discipline here is that strategy lives in files Claude can read at the top of every session. Anti-references are as important as references. Saying we are not a wellness brand tells the model more than ten goal statements ever will. The gate at the bottom is non-negotiable. If those five things aren't true, we don't move on. We've learned this the expensive way.",
   "The trap is starting design while copy is still being written. Then design dictates copy length, copy gets squeezed, and we lose the voice. Reverse it. Sitemap first, copy second, system third — and only then do we generate. Mark sample copy clearly so we know what's load-bearing and what isn't. This is the slowest part of the workflow on paper and the fastest in practice, because it kills the rebuild loop later.",
   "Two things to land here. First, the context list isn't optional — every item gets loaded before we generate, every time. We've structured it as a config because that's what it is. Second, the model policy is an actual budget tool. Sonnet does the long mechanical tail of the project. Opus shows up for the homepage, the hero, the accessibility audit, the high-stakes pages. Starting on Sonnet and escalating is how we keep credits sane without compromising the moments that define the site.",
@@ -47,6 +48,70 @@ code, .mono {
   font-size: 0.92em;
 }
 em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--font-display); font-weight: 700; }
+
+/* slide 00 — Workspace Setup (inserted after overview) */
+.s00 .top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 18px; }
+.s00 h2 { max-width: 1380px; font-size: 92px; }
+.s00 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 20px;
+}
+.s00 .lede {
+  margin-top: 26px;
+  max-width: 1180px;
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.5;
+  color: var(--color-navy);
+}
+.s00 .check-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px 28px;
+}
+.s00 .check-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: var(--color-anti-racist-white);
+  border-radius: 14px;
+  padding: 22px 26px;
+  border: 1px solid rgba(18,34,45,0.08);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 21px;
+  color: var(--color-dark-af);
+  border-left: 5px solid var(--color-golden-shower);
+}
+.s00 .check-item .ix {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  color: var(--color-navy);
+  letter-spacing: 0.04em;
+  width: 32px;
+  flex-shrink: 0;
+}
+.s00 .footer-pill {
+  margin: 36px auto 0;
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 14px;
+  background: var(--color-dark-af);
+  color: var(--color-anti-racist-white);
+  padding: 16px 36px 16px 28px;
+  border-radius: var(--radius-d);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+}
 
 /* slide 1 — cover */
 .s01 { background: var(--color-light-af); }
@@ -202,57 +267,57 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
 }
 .s04 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr 1fr;
-  gap: 22px;
+  gap: 18px;
   flex: 1;
   min-height: 0;
 }
 .s04 .card {
   border-radius: var(--radius-lg);
-  padding: 36px 36px 32px;
+  padding: 26px 26px 24px;
   display: flex;
   flex-direction: column;
   position: relative;
   overflow: hidden;
 }
 .s04 .card .gate-mark {
-  width: 22px;
-  height: 22px;
+  width: 18px;
+  height: 18px;
   border-radius: 999px;
   border: 2px dashed var(--color-golden-shower);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .s04 .card .num {
   font-family: var(--font-display);
   font-weight: 800;
-  font-size: 64px;
+  font-size: 50px;
   line-height: 1;
   color: var(--color-golden-shower);
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 .s04 .card .name {
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 1.05;
   color: var(--color-anti-racist-white);
-  margin-bottom: 14px;
+  margin-bottom: 10px;
 }
 .s04 .card .desc {
   font-family: var(--font-body);
-  font-size: 16px;
-  line-height: 1.5;
+  font-size: 14px;
+  line-height: 1.45;
   color: rgba(229,242,249,0.75);
   margin-bottom: auto;
 }
 .s04 .card .io {
-  margin-top: 22px;
-  padding-top: 18px;
+  margin-top: 16px;
+  padding-top: 14px;
   border-top: 1px solid rgba(229,242,249,0.18);
   font-family: 'Futura PT', ui-monospace, monospace;
   font-weight: 600;
-  font-size: 13px;
+  font-size: 11px;
   color: rgba(229,242,249,0.7);
   letter-spacing: 0.02em;
 }
@@ -261,27 +326,27 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
 .s04 .card.dark { background: var(--color-dark-af); }
 .s04 .card.gold {
   background: var(--color-golden-shower);
-  padding: 40px 36px 34px;
+  padding: 28px 26px 24px;
   position: relative;
   box-shadow: 0 0 0 3px var(--color-golden-shower), 0 0 0 6px var(--color-dark-af);
 }
 .s04 .card.gold .gate-mark { border-color: var(--color-dark-af); }
-.s04 .card.gold .num { color: var(--color-dark-af); opacity: 0.4; font-size: 72px; }
-.s04 .card.gold .name { color: var(--color-dark-af); font-size: 34px; line-height: 1.02; }
-.s04 .card.gold .desc { color: rgba(18,34,45,0.82); font-size: 16px; }
-.s04 .card.gold .io { color: rgba(18,34,45,0.85); border-top-color: rgba(18,34,45,0.3); }
+.s04 .card.gold .num { color: var(--color-dark-af); opacity: 0.4; font-size: 56px; }
+.s04 .card.gold .name { color: var(--color-dark-af); font-size: 26px; line-height: 1.02; }
+.s04 .card.gold .desc { color: rgba(18,34,45,0.82); font-size: 14px; }
+.s04 .card.gold .io { color: rgba(18,34,45,0.85); border-top-color: rgba(18,34,45,0.3); font-size: 11px; }
 .s04 .card.gold .io b { color: var(--color-dark-af); }
 .s04 .card.gold .badge {
   position: absolute;
-  top: 22px;
-  right: 22px;
+  top: 16px;
+  right: 16px;
   font-family: var(--font-body);
   font-weight: 700;
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--color-dark-af);
-  padding: 5px 10px;
+  padding: 4px 8px;
   border: 1.5px solid var(--color-dark-af);
   border-radius: 999px;
 }
@@ -896,7 +961,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Dingus &amp; Zazzy</span>
     </div>
-    <span class="pageno">01 / 11</span>
+    <span class="pageno">01 / 12</span>
   </div>
 
   <div class="burst">
@@ -946,7 +1011,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>The Problem</span>
     </div>
-    <span class="pageno">02 / 11</span>
+    <span class="pageno">02 / 12</span>
   </div>
 
   <div style="margin-top: 60px;">
@@ -994,7 +1059,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Core principle</span>
     </div>
-    <span class="pageno">03 / 11</span>
+    <span class="pageno">03 / 12</span>
   </div>
 
   <div class="burst">
@@ -1021,29 +1086,36 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
 
   <div class="slide-foot" style="left: 140px; right: 140px;">
     <span>The spine of the playbook</span>
-    <span>03 / 11</span>
+    <span>03 / 12</span>
   </div>
 </section>
 
-<!-- ───────────── SLIDE 4 — Six Steps (was 5) ───────────── -->
-<section class="slide s04" data-screen-label="04 The 6-step Process">
+<!-- ───────────── SLIDE 4 — Eight Steps (overview) ───────────── -->
+<section class="slide s04" data-screen-label="04 The 8-step Process">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
-      <span>The 6-step process</span>
+      <span>The 8-step process</span>
     </div>
-    <span class="pageno">04 / 11</span>
+    <span class="pageno">04 / 12</span>
   </div>
 
   <div class="header">
     <div>
-      <span class="eyebrow-sm"><span class="gold-bolt"></span>Six steps · Six gates · Six approvals</span>
+      <span class="eyebrow-sm"><span class="gold-bolt"></span>Eight steps · Eight gates · Eight approvals</span>
       <h2 class="h-section" style="margin-top: 22px;">The whole project,<br>on one page.</h2>
     </div>
     <p class="head-right">The dashed ring above each step is its gate.<br>You don't move on until it's clean.</p>
   </div>
 
   <div class="grid">
+    <div class="card dark">
+      <div class="gate-mark"></div>
+      <div class="num">00</div>
+      <div class="name">Workspace Setup</div>
+      <div class="desc">VS Code, Claude Code, repo access, terminal, preview, deploy target.</div>
+      <div class="io">machine &nbsp;→&nbsp; <b>workspace ready</b></div>
+    </div>
     <div class="card navy">
       <div class="gate-mark"></div>
       <div class="num">01</div>
@@ -1061,21 +1133,21 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
     <div class="card navy">
       <div class="gate-mark"></div>
       <div class="num">03</div>
-      <div class="name">Design System &amp; Assets</div>
+      <div class="name">Design System Foundation</div>
       <div class="desc">Tokens, components, references, anti-references.</div>
       <div class="io">copy &nbsp;→&nbsp; <b>system + Assets/</b></div>
     </div>
     <div class="card dark">
       <div class="gate-mark"></div>
       <div class="num">04</div>
-      <div class="name">Claude Code Setup</div>
-      <div class="desc">Context loaded, skills active, HANDOFF.md live.</div>
+      <div class="name">Build Setup</div>
+      <div class="desc">Project structure, stack, dependencies, base files, HANDOFF.md.</div>
       <div class="io">system &nbsp;→&nbsp; <b>HANDOFF.md</b></div>
     </div>
     <div class="card gold">
       <div class="gate-mark"></div>
       <div class="num">05</div>
-      <div class="name">Generate &amp; Refine</div>
+      <div class="name">Homepage Generation &amp; Refinement</div>
       <div class="desc">Refine the homepage in the browser. The result becomes the visual standard for every other page.</div>
       <div class="io">setup &nbsp;→&nbsp; <b>Build/Homepage/*</b></div>
       <div class="badge">Gravity center</div>
@@ -1083,26 +1155,69 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
     <div class="card navy">
       <div class="gate-mark"></div>
       <div class="num">06</div>
-      <div class="name">Codify &amp; Deliver</div>
-      <div class="desc">Skills, inner pages, Figma import, handoff.</div>
-      <div class="io">homepage &nbsp;→&nbsp; <b>.claude/skills/ + Figma</b></div>
+      <div class="name">Figma Import / Handoff</div>
+      <div class="desc">Refined homepage imported to Figma via HTML.to.design for design handoff.</div>
+      <div class="io">homepage &nbsp;→&nbsp; <b>Figma file</b></div>
+    </div>
+    <div class="card dark">
+      <div class="gate-mark"></div>
+      <div class="num">07</div>
+      <div class="name">Inner Pages &amp; Scaling</div>
+      <div class="desc">Codify into project skills. Scale to every remaining page at the same standard.</div>
+      <div class="io">skills &nbsp;→&nbsp; <b>complete site</b></div>
     </div>
   </div>
 </section>
 
-<!-- ───────────── SLIDE 5 — Strategy ───────────── -->
-<section class="slide s05" data-screen-label="05 Strategy & Planning">
+<!-- ───────────── SLIDE 5 — Workspace Setup (Step 00) ───────────── -->
+<section class="slide s00" data-screen-label="05 Workspace Setup">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 0 · Workspace Setup</span>
+    </div>
+    <span class="pageno">05 / 12</span>
+  </div>
+
+  <div class="top">
+    <div>
+      <div class="step-tag">Step 00 / 07 · Prerequisite</div>
+      <h2 class="h-section">Before Claude can help us build,<br>we need a consistent workspace.</h2>
+      <p class="lede">First, we prepare the workspace so Claude Code can read, edit, run, and validate the project safely.</p>
+    </div>
+  </div>
+
+  <div class="check-grid">
+    <div class="check-item"><span class="ix">01</span>Install VS Code</div>
+    <div class="check-item"><span class="ix">02</span>Install Claude Code</div>
+    <div class="check-item"><span class="ix">03</span>Connect Claude Code to the project folder</div>
+    <div class="check-item"><span class="ix">04</span>Set up GitHub / repository access</div>
+    <div class="check-item"><span class="ix">05</span>Open the project locally</div>
+    <div class="check-item"><span class="ix">06</span>Confirm terminal access</div>
+    <div class="check-item"><span class="ix">07</span>Confirm package manager / install command</div>
+    <div class="check-item"><span class="ix">08</span>Confirm local preview command</div>
+    <div class="check-item"><span class="ix">09</span>Confirm deployment target</div>
+  </div>
+
+  <div class="footer-pill">
+    <span class="gold-bolt" style="background:var(--color-golden-shower)"></span>
+    A required setup checkpoint — not a tutorial.
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 6 — Strategy ───────────── -->
+<section class="slide s05" data-screen-label="06 Strategy & Planning">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Step 1 · Strategy &amp; Planning</span>
     </div>
-    <span class="pageno">05 / 11</span>
+    <span class="pageno">06 / 12</span>
   </div>
 
   <div class="top">
     <div>
-      <div class="step-tag">Step 01 / 06</div>
+      <div class="step-tag">Step 01 / 07</div>
       <h2 class="h-section">Strategy is the brief<br>Claude actually reads.</h2>
     </div>
   </div>
@@ -1140,18 +1255,18 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 6 — Sitemap, Copy, System ───────────── -->
-<section class="slide s06" data-screen-label="06 Sitemap, Copy, System">
+<!-- ───────────── SLIDE 7 — Sitemap, Copy, Design System Foundation ───────────── -->
+<section class="slide s06" data-screen-label="07 Sitemap, Copy, Design System Foundation">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
-      <span>Steps 2 &amp; 3 · Sitemap, Copy, System</span>
+      <span>Steps 2 &amp; 3 · Sitemap, Copy, Design System</span>
     </div>
-    <span class="pageno">06 / 11</span>
+    <span class="pageno">07 / 12</span>
   </div>
 
   <div>
-    <div class="step-tag">Steps 02 &amp; 03 / 06</div>
+    <div class="step-tag">Steps 02 &amp; 03 / 07</div>
     <h2 class="h-section">Three artifacts.<br>One alignment.</h2>
   </div>
 
@@ -1187,7 +1302,7 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
       </div>
     </div>
     <div class="col">
-      <div class="head"><span class="num">03</span> System</div>
+      <div class="head"><span class="num">03</span> Design System Foundation</div>
       <div class="body">
         <p class="desc">Tokens, components, states, grid, references, anti-references.</p>
         <div class="preview">
@@ -1216,19 +1331,19 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 7 — Claude Setup ───────────── -->
-<section class="slide s07 dark" data-screen-label="07 Claude Setup">
+<!-- ───────────── SLIDE 8 — Build Setup ───────────── -->
+<section class="slide s07 dark" data-screen-label="08 Build Setup">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" fill="#fff" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
-      <span>Step 4 · Claude Code Setup</span>
+      <span>Step 4 · Build Setup</span>
     </div>
-    <span class="pageno">07 / 11</span>
+    <span class="pageno">08 / 12</span>
   </div>
 
   <div class="header">
-    <div class="step-tag">Step 04 / 06</div>
-    <h2 class="h-section">Set up once.<br>Reuse forever.</h2>
+    <div class="step-tag">Step 04 / 07 · Project structure, stack, dependencies, base files</div>
+    <h2 class="h-section">Set up the build once.<br>Reuse it forever.</h2>
   </div>
 
   <div class="panels">
@@ -1269,18 +1384,18 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 8 — Generate & Refine ───────────── -->
-<section class="slide s08" data-screen-label="08 Generate & Refine">
+<!-- ───────────── SLIDE 9 — Homepage Generation & Refinement ───────────── -->
+<section class="slide s08" data-screen-label="09 Homepage Generation & Refinement">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
-      <span>Step 5 · Generation &amp; Refinement</span>
+      <span>Step 5 · Homepage Generation &amp; Refinement</span>
     </div>
-    <span class="pageno">08 / 11</span>
+    <span class="pageno">09 / 12</span>
   </div>
 
   <div>
-    <div class="step-tag">Step 05 / 06</div>
+    <div class="step-tag">Step 05 / 07</div>
     <h2 class="h-section">The homepage<br>sets the standard.</h2>
   </div>
 
@@ -1308,19 +1423,19 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 9 — Skills & Consistency ───────────── -->
-<section class="slide s09" data-screen-label="09 Skills & Consistency">
+<!-- ───────────── SLIDE 10 — Figma Import + Inner Pages & Scaling ───────────── -->
+<section class="slide s09" data-screen-label="10 Figma Import & Inner Pages">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
-      <span>Step 6 · Project Skills &amp; Consistency</span>
+      <span>Steps 6 &amp; 7 · Figma Import · Inner Pages &amp; Scaling</span>
     </div>
-    <span class="pageno">09 / 11</span>
+    <span class="pageno">10 / 12</span>
   </div>
 
   <div class="header">
     <div>
-      <div class="step-tag">Step 06 / 06</div>
+      <div class="step-tag">Steps 06 &amp; 07 / 07 · Import to Figma, then scale every page</div>
       <h2 class="h-section">Codify, then scale.</h2>
     </div>
   </div>
@@ -1357,14 +1472,14 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 10 — Risks ───────────── -->
-<section class="slide s10" data-screen-label="10 Risks & Mitigation">
+<!-- ───────────── SLIDE 11 — Risks ───────────── -->
+<section class="slide s10" data-screen-label="11 Risks & Mitigation">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Risks &amp; Mitigation</span>
     </div>
-    <span class="pageno">10 / 11</span>
+    <span class="pageno">11 / 12</span>
   </div>
 
   <div class="header">
@@ -1414,14 +1529,14 @@ em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--f
   </div>
 </section>
 
-<!-- ───────────── SLIDE 11 — Delivery & Next ───────────── -->
-<section class="slide s11" data-screen-label="11 Delivery & Next Steps">
+<!-- ───────────── SLIDE 12 — Delivery & Next ───────────── -->
+<section class="slide s11" data-screen-label="12 Delivery & Next Steps">
   <div class="chrome">
     <div class="brand">
       <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
       <span>Final delivery &amp; next steps</span>
     </div>
-    <span class="pageno">11 / 11</span>
+    <span class="pageno">12 / 12</span>
   </div>
 
   <div class="top">

@@ -62,7 +62,7 @@
       position: fixed;
       inset: 0;
       display: block;
-      background: #000;
+      background: #e5f2f9;
       color: #fff;
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
       overflow: hidden;
@@ -535,7 +535,10 @@
       }
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      const s = Math.min(vw / this.designWidth, vh / this.designHeight);
+      // Cover: scale up until both axes fill the viewport. The canvas is
+      // overflow:hidden via :host, so any excess is clipped — preferred
+      // over letterboxing for a true full-screen feel.
+      const s = Math.max(vw / this.designWidth, vh / this.designHeight);
       this._canvas.style.transform = `scale(${s})`;
     }
 
