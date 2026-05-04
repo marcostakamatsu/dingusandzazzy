@@ -1,0 +1,1471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Claude Code Website Workflow — D&Z</title>
+<link rel="stylesheet" href="deck.css">
+<script type="application/json" id="speaker-notes">
+[
+  "Open by naming the pattern everyone in the room recognizes — websites that drift between strategy, copy, and design until nobody remembers what we agreed on in week one. This deck is our answer. It's not a tool pitch. It's a way of working that makes consistency the default and makes handoff feel boring in the best way. By the end of these eleven slides you'll know exactly how we run a website project with Claude Code, where the gates are, and why the order matters.",
+  "These three failures account for most of the rework we've seen across recent website projects. They're not craft problems. They're sequencing problems. Copy gets approved after the hero is designed, so the hero gets rebuilt. A new Claude session starts cold, so the second page doesn't match the first. Inner pages get generated in parallel with the homepage, so the visual standard never settles. Every step of this workflow exists to close one of these gaps.",
+  "This is the spine of the whole deck. Read it slowly. Plan properly. Approve copy and sitemap. Generate in code. Refine in the browser. Import to Figma at the end. The order is the principle. Out of order, you get rework. In order, you get a site that ships clean. Everything in the next eight slides is just the detail of how we hold this line.",
+  "This is the spine card by card. Six steps, six gates, six approvals. Notice the dashed ring above each step — that's the gate. We don't move forward until it's clean. Step five sits in gold because it's the gravity center of the project: the homepage we generate and refine becomes the visual standard for everything that follows. Each step has a clear input on the left and an artifact it produces on the right. That artifact is what the next step consumes.",
+  "The discipline here is that strategy lives in files Claude can read at the top of every session. Anti-references are as important as references. Saying we are not a wellness brand tells the model more than ten goal statements ever will. The gate at the bottom is non-negotiable. If those five things aren't true, we don't move on. We've learned this the expensive way.",
+  "The trap is starting design while copy is still being written. Then design dictates copy length, copy gets squeezed, and we lose the voice. Reverse it. Sitemap first, copy second, system third — and only then do we generate. Mark sample copy clearly so we know what's load-bearing and what isn't. This is the slowest part of the workflow on paper and the fastest in practice, because it kills the rebuild loop later.",
+  "Two things to land here. First, the context list isn't optional — every item gets loaded before we generate, every time. We've structured it as a config because that's what it is. Second, the model policy is an actual budget tool. Sonnet does the long mechanical tail of the project. Opus shows up for the homepage, the hero, the accessibility audit, the high-stakes pages. Starting on Sonnet and escalating is how we keep credits sane without compromising the moments that define the site.",
+  "The shift in this step is small and important. We refine the homepage in code, in the browser, with Claude. Not in Figma. Figma comes at the end, as a delivery artifact. If we refine in Figma we end up rebuilding in code. The browser is where the page is real, so the browser is where we make it good. The homepage we approve here is the visual standard every inner page inherits. Generate, review, refine — that's the loop.",
+  "This is the compounding play. Every project teaches us patterns. If those patterns live in a Slack thread or a designer's head, they're gone next month. If they live in two project-scoped skills, every page after the homepage starts ahead. The rule to remember: the live code beats the skill, always. Skills serve the implementation, not the other way around. Build the homepage well, then capture what you built.",
+  "Don't gloss this slide. These are the six places we've watched projects break, and these are the named mitigations we've adopted in response. The pattern across all six is the same: a gate, a file, or a sequencing rule. Nothing exotic, nothing expensive. The workflow earns its keep by preventing these six failures, and that's most of the value.",
+  "Close on the asks, not the recap. Two pilot projects, monthly review, and a simple measurement: rework hours and credit spend before and after. If those numbers move, the playbook is doing its job. If they don't, we revise it. The closing line is the same five-word principle from slide three — say it once more so the room leaves with it stuck in their heads. Plan, approve, generate, refine, import."
+]
+</script>
+<style>
+/* shared */
+.eyebrow-sm {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+.eyebrow-sm .gold-bolt { font-size: 14px; }
+code, .mono {
+  font-family: 'Futura PT', ui-monospace, 'SF Mono', Consolas, monospace;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.code-chip {
+  font-family: 'Futura PT', ui-monospace, Consolas, monospace;
+  font-weight: 700;
+  background: rgba(18,34,45,0.08);
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 0.92em;
+}
+em.acc { font-style: italic; color: var(--color-pinky-two); font-family: var(--font-display); font-weight: 700; }
+
+/* slide 1 — cover */
+.s01 { background: var(--color-light-af); }
+.s01 .left {
+  position: absolute;
+  left: 100px;
+  top: 200px;
+  max-width: 1180px;
+}
+.s01 .eyebrow-row { display: flex; align-items: center; gap: 16px; margin-bottom: 40px; }
+.s01 .eyebrow-row .gold-bolt { font-size: 28px; }
+.s01 h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 188px;
+  line-height: 0.9;
+  letter-spacing: -0.02em;
+  color: var(--color-dark-af);
+}
+.s01 .lede-block {
+  position: absolute;
+  bottom: 180px;
+  left: 100px;
+  max-width: 880px;
+}
+.s01 .lede-block .lede {
+  font-family: var(--font-body);
+  font-size: 26px;
+  line-height: 1.45;
+  color: var(--color-navy);
+}
+.s01 .right {
+  position: absolute;
+  right: 80px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 540px;
+}
+.s01 .meta-strip {
+  position: absolute;
+  bottom: 90px;
+  left: 100px;
+  right: 100px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  font-weight: 500;
+  border-top: 1px solid rgba(18,34,45,0.18);
+  padding-top: 18px;
+}
+.s01 .burst { right: -200px; bottom: -200px; width: 700px; height: 700px; opacity: 0.18; }
+
+/* slide 2 — problem */
+.s02 .h-sec { font-size: 124px; max-width: 1500px; }
+.s02 .grid { margin-top: 80px; display: flex; flex-direction: column; gap: 28px; }
+.s02 .row {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  align-items: center;
+  gap: 56px;
+  padding: 32px 0;
+  border-top: 1px solid rgba(18,34,45,0.15);
+}
+.s02 .row:last-child { border-bottom: 1px solid rgba(18,34,45,0.15); }
+.s02 .row .num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 88px;
+  line-height: 1;
+  color: var(--color-dark-af);
+  letter-spacing: -0.02em;
+  position: relative;
+}
+.s02 .row .num::after {
+  content: "";
+  position: absolute;
+  left: -8px;
+  bottom: 6px;
+  width: 88px;
+  height: 14px;
+  background: var(--color-pinky-two);
+  z-index: -1;
+  border-radius: 4px;
+}
+.s02 .row .label {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 6px;
+}
+.s02 .row .name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 1.05;
+  color: var(--color-dark-af);
+}
+.s02 .row .pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 30px 14px 24px;
+  background: var(--color-pinky-two);
+  color: var(--color-dark-af);
+  border-radius: var(--radius-d);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* slide 3 — principle */
+.s03 { background: var(--color-light-af); display: flex; flex-direction: column; justify-content: center; padding: 100px 140px; }
+.s03 .verbs { display: flex; flex-direction: column; }
+.s03 .verbs .verb {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 178px;
+  line-height: 0.96;
+  letter-spacing: -0.025em;
+  color: var(--color-dark-af);
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.s03 .verbs .verb .gold-bolt { font-size: 76px; flex-shrink: 0; }
+.s03 .sub {
+  margin-top: 50px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 36px;
+  color: var(--color-navy);
+  font-style: italic;
+}
+.s03 .burst { right: -260px; top: -260px; width: 900px; height: 900px; opacity: 0.22; }
+
+/* slide 4 — six steps grid (was slide 5) */
+.s04 .header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 48px; }
+.s04 h2 { font-size: 100px; max-width: 1100px; }
+.s04 .head-right {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--color-navy);
+  max-width: 360px;
+  text-align: right;
+}
+.s04 .grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 22px;
+  flex: 1;
+  min-height: 0;
+}
+.s04 .card {
+  border-radius: var(--radius-lg);
+  padding: 36px 36px 32px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.s04 .card .gate-mark {
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 2px dashed var(--color-golden-shower);
+  margin-bottom: 14px;
+}
+.s04 .card .num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 64px;
+  line-height: 1;
+  color: var(--color-golden-shower);
+  margin-bottom: 8px;
+}
+.s04 .card .name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1.05;
+  color: var(--color-anti-racist-white);
+  margin-bottom: 14px;
+}
+.s04 .card .desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: rgba(229,242,249,0.75);
+  margin-bottom: auto;
+}
+.s04 .card .io {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(229,242,249,0.18);
+  font-family: 'Futura PT', ui-monospace, monospace;
+  font-weight: 600;
+  font-size: 13px;
+  color: rgba(229,242,249,0.7);
+  letter-spacing: 0.02em;
+}
+.s04 .card .io b { color: var(--color-golden-shower); font-weight: 700; }
+.s04 .card.navy { background: var(--color-navy); }
+.s04 .card.dark { background: var(--color-dark-af); }
+.s04 .card.gold {
+  background: var(--color-golden-shower);
+  padding: 40px 36px 34px;
+  position: relative;
+  box-shadow: 0 0 0 3px var(--color-golden-shower), 0 0 0 6px var(--color-dark-af);
+}
+.s04 .card.gold .gate-mark { border-color: var(--color-dark-af); }
+.s04 .card.gold .num { color: var(--color-dark-af); opacity: 0.4; font-size: 72px; }
+.s04 .card.gold .name { color: var(--color-dark-af); font-size: 34px; line-height: 1.02; }
+.s04 .card.gold .desc { color: rgba(18,34,45,0.82); font-size: 16px; }
+.s04 .card.gold .io { color: rgba(18,34,45,0.85); border-top-color: rgba(18,34,45,0.3); }
+.s04 .card.gold .io b { color: var(--color-dark-af); }
+.s04 .card.gold .badge {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-dark-af);
+  padding: 5px 10px;
+  border: 1.5px solid var(--color-dark-af);
+  border-radius: 999px;
+}
+
+/* slide 5 — strategy */
+.s05 .top { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; }
+.s05 h2 { max-width: 1300px; font-size: 96px; }
+.s05 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 20px;
+}
+.s05 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; flex: 1; }
+.s05 .col h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 28px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(18,34,45,0.2);
+}
+.s05 .input-list {
+  font-family: var(--font-body);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 32px;
+}
+.s05 .input-list .item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  font-weight: 500;
+  color: var(--color-dark-af);
+}
+.s05 .input-list .gold-bolt { font-size: 14px; flex-shrink: 0; }
+.s05 .file-list { display: flex; flex-direction: column; gap: 14px; }
+.s05 .file-list .f {
+  font-family: 'Futura PT', ui-monospace, monospace;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-dark-af);
+  padding: 16px 24px;
+  background: var(--color-anti-racist-white);
+  border-radius: 12px;
+  border-left: 6px solid var(--color-golden-shower);
+  letter-spacing: 0.01em;
+}
+.s05 .gate {
+  margin-top: 50px;
+  background: var(--color-golden-shower);
+  border-radius: var(--radius-lg);
+  padding: 32px 44px;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.s05 .gate .gate-label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 36px;
+  color: var(--color-dark-af);
+  flex-shrink: 0;
+}
+.s05 .gate .gate-text {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--color-dark-af);
+}
+
+/* slide 6 — sitemap, copy, system */
+.s06 h2 { font-size: 104px; }
+.s06 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 20px;
+}
+.s06 .cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 68px; flex: 1; }
+.s06 .col {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-anti-racist-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(18,34,45,0.06);
+}
+.s06 .col .head {
+  padding: 28px 36px;
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  background: var(--color-navy);
+  color: var(--color-anti-racist-white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 38px;
+}
+.s06 .col .head .num {
+  font-size: 18px;
+  opacity: 0.55;
+  font-weight: 600;
+  font-family: var(--font-body);
+  letter-spacing: 0.18em;
+}
+.s06 .col .body {
+  padding: 36px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+.s06 .col .desc {
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--color-dark-af);
+}
+.s06 .preview {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  background: var(--color-light-af);
+  border-radius: 12px;
+  padding: 24px;
+}
+.tree { font-family: var(--font-body); font-weight: 600; font-size: 17px; color: var(--color-navy); width: 100%; }
+.tree .lvl0 { font-size: 19px; color: var(--color-dark-af); margin-bottom: 12px; }
+.tree .lvl1 { padding-left: 18px; line-height: 1.9; }
+.tree .lvl1::before { content: "└ "; color: var(--color-golden-shower); margin-right: 4px; }
+.copyblock { width: 100%; font-family: var(--font-body); }
+.copyblock .h { font-family: var(--font-display); font-weight: 700; font-size: 26px; margin-bottom: 12px; line-height: 1.1; color: var(--color-dark-af); }
+.copyblock .l { height: 8px; background: rgba(18,34,45,0.12); border-radius: 4px; margin-bottom: 8px; }
+.copyblock .l.short { width: 60%; }
+.copyblock .pill {
+  margin-top: 16px;
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--color-golden-shower);
+  color: var(--color-dark-af);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.swatches { display: flex; gap: 10px; margin-bottom: 20px; }
+.swatches .sw { width: 44px; height: 44px; border-radius: 8px; }
+.tokens { font-family: var(--font-body); font-size: 14px; color: var(--color-navy); display: flex; flex-direction: column; gap: 6px; }
+.tokens .tk { display: flex; justify-content: space-between; padding: 8px 14px; background: var(--color-anti-racist-white); border-radius: 6px; border: 1px solid rgba(18,34,45,0.06); }
+.tokens .tk b { color: var(--color-dark-af); font-weight: 700; }
+.s06 .footer-pill {
+  margin: 36px auto 0;
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 14px;
+  background: var(--color-dark-af);
+  color: var(--color-anti-racist-white);
+  padding: 18px 40px 18px 30px;
+  border-radius: var(--radius-d);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 26px;
+}
+
+/* slide 7 — claude setup (dark) */
+.s07 { background: var(--color-dark-af); color: var(--color-anti-racist-white); }
+.s07 .header { margin-bottom: 44px; }
+.s07 h2 { font-size: 100px; color: var(--color-anti-racist-white); }
+.s07 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-golden-shower);
+  margin-bottom: 18px;
+}
+.s07 .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.s07 .panel {
+  background: var(--color-navy);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+}
+.s07 .panel h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-golden-shower);
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(229,242,249,0.12);
+}
+.s07 .panel .config-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 28px;
+  font-family: 'Futura PT', ui-monospace, monospace;
+  font-weight: 600;
+  font-size: 16px;
+  color: rgba(229,242,249,0.92);
+}
+.s07 .panel .config-list .it {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0;
+}
+.s07 .panel .config-list .gold-bolt { font-size: 11px; flex-shrink: 0; }
+.s07 .panel.skills .codeblock {
+  background: var(--color-dark-af);
+  border-radius: 12px;
+  border: 1px solid var(--color-golden-shower);
+  padding: 22px 24px;
+  font-family: 'Futura PT', ui-monospace, Consolas, monospace;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 1.55;
+  color: rgba(229,242,249,0.92);
+  letter-spacing: 0.01em;
+}
+.s07 .panel.skills .codeblock .skill-name { color: var(--color-golden-shower); font-weight: 700; }
+.s07 .panel.skills .codeblock .comment { color: rgba(140,193,223,0.7); }
+.s07 .policy {
+  margin-top: 24px;
+  background: var(--color-navy);
+  border-radius: var(--radius-lg);
+  padding: 32px 36px;
+}
+.s07 .policy h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-golden-shower);
+  margin-bottom: 20px;
+}
+.s07 .policy-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 22px; }
+.s07 .policy-row { border-radius: 14px; padding: 22px 26px; }
+.s07 .policy-row.sonnet { background: rgba(140,193,223,0.14); border: 1px solid var(--color-baby-blue-ballz); }
+.s07 .policy-row.opus { background: rgba(224,171,88,0.16); border: 1px solid var(--color-golden-shower); }
+.s07 .policy-row .tag {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 28px;
+  margin-bottom: 6px;
+}
+.s07 .policy-row.sonnet .tag { color: var(--color-baby-blue-ballz); }
+.s07 .policy-row.opus .tag { color: var(--color-golden-shower); }
+.s07 .policy-row p { font-size: 15px; line-height: 1.5; color: rgba(229,242,249,0.85); }
+.s07 .policy .rule {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--color-anti-racist-white);
+  border-top: 1px solid rgba(229,242,249,0.12);
+  padding-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* slide 8 — generate & refine */
+.s08 h2 { font-size: 104px; }
+.s08 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 18px;
+}
+.s08 .layout { display: grid; grid-template-columns: 1fr 540px; gap: 56px; margin-top: 60px; flex: 1; }
+.s08 .rows { display: flex; flex-direction: column; gap: 22px; }
+.s08 .row {
+  border-radius: var(--radius-lg);
+  padding: 32px 40px;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.s08 .row.gen { background: var(--color-anti-racist-white); border: 1px solid rgba(18,34,45,0.1); }
+.s08 .row.rev { background: rgba(140,193,223,0.4); }
+.s08 .row.ref { background: rgba(250,149,137,0.32); }
+.s08 .row .step {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 56px;
+  color: var(--color-dark-af);
+  line-height: 1;
+  flex-shrink: 0;
+  width: 200px;
+}
+.s08 .row .items {
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.5;
+  color: var(--color-dark-af);
+  font-weight: 500;
+}
+.s08 .quote {
+  background: var(--color-golden-shower);
+  border-radius: var(--radius-d);
+  padding: 64px 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-self: center;
+}
+.s08 .quote .q1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 96px;
+  line-height: 0.95;
+  color: var(--color-dark-af);
+  letter-spacing: -0.02em;
+}
+.s08 .quote .q2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-style: italic;
+  font-size: 56px;
+  line-height: 1;
+  color: var(--color-dark-af);
+  margin-top: 12px;
+}
+.s08 .quote .meta {
+  margin-top: 36px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-dark-af);
+  opacity: 0.6;
+}
+
+/* slide 9 — skills & consistency */
+.s09 .header { margin-bottom: 50px; display: flex; justify-content: space-between; align-items: flex-end; gap: 60px; }
+.s09 h2 { font-size: 120px; max-width: 1200px; }
+.s09 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 18px;
+}
+.s09 .skill-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+.s09 .skill {
+  border-radius: var(--radius-lg);
+  padding: 40px 44px;
+  color: var(--color-anti-racist-white);
+}
+.s09 .skill.dark { background: var(--color-dark-af); }
+.s09 .skill.navy { background: var(--color-navy); }
+.s09 .skill .name {
+  display: inline-block;
+  font-family: 'Futura PT', ui-monospace, Consolas, monospace;
+  font-weight: 700;
+  font-size: 22px;
+  color: var(--color-golden-shower);
+  letter-spacing: 0.02em;
+  margin-bottom: 22px;
+  padding: 8px 16px;
+  border: 1px solid var(--color-golden-shower);
+  border-radius: 8px;
+}
+.s09 .skill h3 { font-family: var(--font-display); font-weight: 700; font-size: 32px; margin-bottom: 16px; line-height: 1.1; }
+.s09 .skill p { font-size: 17px; line-height: 1.55; color: rgba(229,242,249,0.78); }
+.s09 .order-strip {
+  margin-top: 32px;
+  background: var(--color-light-af);
+  border: 1px solid rgba(18,34,45,0.1);
+  border-radius: var(--radius-lg);
+  padding: 26px 36px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.s09 .order-strip .lab {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-right: 6px;
+}
+.s09 .order-strip .pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px 10px 18px;
+  background: var(--color-dark-af);
+  color: var(--color-anti-racist-white);
+  border-radius: var(--radius-d);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+}
+.s09 .order-strip .pill .n { color: var(--color-golden-shower); font-family: var(--font-display); font-weight: 800; font-size: 18px; }
+.s09 .order-strip .arr { color: var(--color-navy); font-weight: 700; }
+.s09 .pull-pill {
+  margin-top: 32px;
+  display: inline-flex;
+  align-self: flex-start;
+  align-items: center;
+  gap: 18px;
+  padding: 24px 48px 24px 32px;
+  background: var(--color-golden-shower);
+  border-radius: var(--radius-d);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 28px;
+  color: var(--color-dark-af);
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+}
+.s09 .pull-pill .gold-bolt { background: var(--color-dark-af); font-size: 26px; }
+
+/* slide 10 — risks */
+.s10 { padding-top: 80px; }
+.s10 .header { display: flex; justify-content: space-between; align-items: flex-end; gap: 60px; margin-bottom: 50px; }
+.s10 h2 { font-size: 100px; max-width: 1200px; }
+.s10 .head-sub {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: 26px;
+  color: var(--color-navy);
+  max-width: 460px;
+  text-align: right;
+  line-height: 1.2;
+}
+.s10 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 18px;
+}
+.s10 .table {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.s10 .thead {
+  display: grid;
+  grid-template-columns: 70px 1fr 1fr;
+  gap: 40px;
+  padding: 14px 0;
+  border-bottom: 2px solid var(--color-dark-af);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  color: var(--color-dark-af);
+}
+.s10 .thead .lbl-r { color: var(--color-pinky-two); }
+.s10 .thead .lbl-m { color: var(--color-golden-shower); }
+.s10 .row {
+  display: grid;
+  grid-template-columns: 70px 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid rgba(18,34,45,0.12);
+  min-height: 76px;
+}
+.s10 .row .num {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--color-dark-af);
+  line-height: 1;
+}
+.s10 .risk, .s10 .miti {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 26px 12px 22px;
+  border-radius: var(--radius-d);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.2;
+  height: 52px;
+  max-width: 100%;
+}
+.s10 .risk { background: var(--color-pinky-two); color: var(--color-dark-af); }
+.s10 .miti { background: var(--color-golden-shower); color: var(--color-dark-af); }
+.s10 .risk code, .s10 .miti code {
+  font-family: 'Futura PT', ui-monospace, monospace;
+  font-weight: 700;
+  background: rgba(18,34,45,0.18);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 16px;
+  margin-left: 6px;
+}
+
+/* slide 11 — delivery & next */
+.s11 { background: var(--color-light-af); }
+.s11 .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 60px; margin-bottom: 56px; }
+.s11 h2 { font-size: 108px; max-width: 1100px; }
+.s11 .top .portrait-mini { width: 280px; flex-shrink: 0; }
+.s11 .step-tag {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 18px;
+}
+.s11 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; }
+.s11 .col h3 {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(18,34,45,0.18);
+}
+.s11 .deliv { display: flex; flex-direction: column; gap: 12px; }
+.s11 .deliv .item {
+  background: var(--color-anti-racist-white);
+  border-radius: 14px;
+  padding: 20px 28px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 21px;
+  color: var(--color-dark-af);
+  border: 1px solid rgba(18,34,45,0.06);
+}
+.s11 .deliv .item .ix {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  color: var(--color-navy);
+  width: 28px;
+  letter-spacing: 0.04em;
+}
+.s11 .next { display: flex; flex-direction: column; gap: 22px; }
+.s11 .next .item {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  font-family: var(--font-body);
+  font-size: 23px;
+  font-weight: 500;
+  color: var(--color-dark-af);
+  line-height: 1.4;
+}
+.s11 .next .item .gold-bolt { font-size: 22px; flex-shrink: 0; margin-top: 6px; }
+.s11 .closer {
+  position: absolute;
+  bottom: 70px;
+  left: 100px;
+  right: 100px;
+  border-top: 1px solid rgba(18,34,45,0.18);
+  padding-top: 36px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 84px;
+  line-height: 1;
+  color: var(--color-dark-af);
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+.s11 .closer .dot { color: var(--color-pinky-two); }
+.s11 .closer .gold-bolt { font-size: 64px; align-self: center; margin-left: 12px; }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+<!-- ───────────── SLIDE 1 — Cover ───────────── -->
+<section class="slide s01" data-screen-label="01 Cover">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Dingus &amp; Zazzy</span>
+    </div>
+    <span class="pageno">01 / 11</span>
+  </div>
+
+  <div class="burst">
+    <svg viewBox="0 0 700 700">
+      <g fill="none" stroke="#e0ab58" stroke-width="1.5">
+        <circle cx="350" cy="350" r="80"/>
+        <circle cx="350" cy="350" r="140"/>
+        <circle cx="350" cy="350" r="200"/>
+        <circle cx="350" cy="350" r="260"/>
+        <circle cx="350" cy="350" r="320"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="left">
+    <div class="eyebrow-row">
+      <span class="gold-bolt"></span>
+      <span class="eyebrow-sm">An internal D&amp;Z playbook</span>
+    </div>
+    <h1>Websites,<br>without the<br>rework.</h1>
+  </div>
+
+  <div class="lede-block">
+    <p class="lede">How we use Claude Code to build sites with more consistency, less waste, and a cleaner handoff.</p>
+  </div>
+
+  <div class="right">
+    <div class="portrait-frame">
+      <img class="frame-img" src="assets/gold-frame.png" alt="">
+      <div class="portrait">
+        <img src="assets/humanimals/cat.png" alt="Captain Cat">
+      </div>
+    </div>
+  </div>
+
+  <div class="meta-strip">
+    <span>Internal · Design &amp; Product</span>
+    <span>Claude Code Website Workflow</span>
+    <span>Q2 · 2026</span>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 2 — Problem ───────────── -->
+<section class="slide s02" data-screen-label="02 The Problem">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>The Problem</span>
+    </div>
+    <span class="pageno">02 / 11</span>
+  </div>
+
+  <div style="margin-top: 60px;">
+    <span class="eyebrow-sm"><span class="gold-bolt"></span>The pattern we keep seeing</span>
+    <h2 class="h-section h-sec" style="margin-top:28px;">We rebuild because<br>we generated <em class="acc">too&nbsp;early</em>.</h2>
+  </div>
+
+  <div class="grid">
+    <div class="row">
+      <div><span class="num">01</span></div>
+      <div>
+        <div class="label">Failure mode</div>
+        <div class="name">Copy changes after the layout is built.</div>
+      </div>
+      <div><span class="pill">Visual rework</span></div>
+    </div>
+    <div class="row">
+      <div><span class="num">02</span></div>
+      <div>
+        <div class="label">Failure mode</div>
+        <div class="name">Claude loses context between sessions.</div>
+      </div>
+      <div><span class="pill">Inconsistency</span></div>
+    </div>
+    <div class="row">
+      <div><span class="num">03</span></div>
+      <div>
+        <div class="label">Failure mode</div>
+        <div class="name">Inner pages built before the homepage is refined.</div>
+      </div>
+      <div><span class="pill">Site-wide drift</span></div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>Three sequencing failures</span>
+    <span>Each one is preventable</span>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 3 — Core Principle ───────────── -->
+<section class="slide s03" data-screen-label="03 Core Principle">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Core principle</span>
+    </div>
+    <span class="pageno">03 / 11</span>
+  </div>
+
+  <div class="burst">
+    <svg viewBox="0 0 900 900">
+      <g fill="none" stroke="#e0ab58" stroke-width="1.5">
+        <circle cx="450" cy="450" r="100"/>
+        <circle cx="450" cy="450" r="180"/>
+        <circle cx="450" cy="450" r="260"/>
+        <circle cx="450" cy="450" r="340"/>
+        <circle cx="450" cy="450" r="420"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="verbs">
+    <div class="verb"><span class="gold-bolt"></span>Plan.</div>
+    <div class="verb"><span class="gold-bolt"></span>Approve.</div>
+    <div class="verb"><span class="gold-bolt"></span>Generate.</div>
+    <div class="verb"><span class="gold-bolt"></span>Refine.</div>
+    <div class="verb"><span class="gold-bolt"></span>Import.</div>
+  </div>
+
+  <p class="sub">In that order. Always.</p>
+
+  <div class="slide-foot" style="left: 140px; right: 140px;">
+    <span>The spine of the playbook</span>
+    <span>03 / 11</span>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 4 — Six Steps (was 5) ───────────── -->
+<section class="slide s04" data-screen-label="04 The 6-step Process">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>The 6-step process</span>
+    </div>
+    <span class="pageno">04 / 11</span>
+  </div>
+
+  <div class="header">
+    <div>
+      <span class="eyebrow-sm"><span class="gold-bolt"></span>Six steps · Six gates · Six approvals</span>
+      <h2 class="h-section" style="margin-top: 22px;">The whole project,<br>on one page.</h2>
+    </div>
+    <p class="head-right">The dashed ring above each step is its gate.<br>You don't move on until it's clean.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card navy">
+      <div class="gate-mark"></div>
+      <div class="num">01</div>
+      <div class="name">Strategy &amp; Planning</div>
+      <div class="desc">Brand, audit, sitemap strategy, design direction.</div>
+      <div class="io">brief &amp; brand &nbsp;→&nbsp; <b>Plan/*.md</b></div>
+    </div>
+    <div class="card dark">
+      <div class="gate-mark"></div>
+      <div class="num">02</div>
+      <div class="name">Sitemap &amp; Copy</div>
+      <div class="desc">Full sitemap, page-by-page copy, approved CTAs.</div>
+      <div class="io">strategy &nbsp;→&nbsp; <b>04_Full-Sitemap.md</b></div>
+    </div>
+    <div class="card navy">
+      <div class="gate-mark"></div>
+      <div class="num">03</div>
+      <div class="name">Design System &amp; Assets</div>
+      <div class="desc">Tokens, components, references, anti-references.</div>
+      <div class="io">copy &nbsp;→&nbsp; <b>system + Assets/</b></div>
+    </div>
+    <div class="card dark">
+      <div class="gate-mark"></div>
+      <div class="num">04</div>
+      <div class="name">Claude Code Setup</div>
+      <div class="desc">Context loaded, skills active, HANDOFF.md live.</div>
+      <div class="io">system &nbsp;→&nbsp; <b>HANDOFF.md</b></div>
+    </div>
+    <div class="card gold">
+      <div class="gate-mark"></div>
+      <div class="num">05</div>
+      <div class="name">Generate &amp; Refine</div>
+      <div class="desc">Refine the homepage in the browser. The result becomes the visual standard for every other page.</div>
+      <div class="io">setup &nbsp;→&nbsp; <b>Build/Homepage/*</b></div>
+      <div class="badge">Gravity center</div>
+    </div>
+    <div class="card navy">
+      <div class="gate-mark"></div>
+      <div class="num">06</div>
+      <div class="name">Codify &amp; Deliver</div>
+      <div class="desc">Skills, inner pages, Figma import, handoff.</div>
+      <div class="io">homepage &nbsp;→&nbsp; <b>.claude/skills/ + Figma</b></div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 5 — Strategy ───────────── -->
+<section class="slide s05" data-screen-label="05 Strategy & Planning">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 1 · Strategy &amp; Planning</span>
+    </div>
+    <span class="pageno">05 / 11</span>
+  </div>
+
+  <div class="top">
+    <div>
+      <div class="step-tag">Step 01 / 06</div>
+      <h2 class="h-section">Strategy is the brief<br>Claude actually reads.</h2>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <h3>Inputs</h3>
+      <div class="input-list">
+        <div class="item"><span class="gold-bolt"></span>Brand guide</div>
+        <div class="item"><span class="gold-bolt"></span>Current site</div>
+        <div class="item"><span class="gold-bolt"></span>Briefing</div>
+        <div class="item"><span class="gold-bolt"></span>Goals</div>
+        <div class="item"><span class="gold-bolt"></span>Audience</div>
+        <div class="item"><span class="gold-bolt"></span>Platform</div>
+        <div class="item"><span class="gold-bolt"></span>Constraints</div>
+        <div class="item"><span class="gold-bolt"></span>Deadlines</div>
+        <div class="item"><span class="gold-bolt"></span>References</div>
+        <div class="item"><span class="gold-bolt"></span>Anti-references</div>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Outputs</h3>
+      <div class="file-list">
+        <div class="f">Plan/00_Full-Plan.md</div>
+        <div class="f">Plan/01_Brand-Analysis.md</div>
+        <div class="f">Plan/02_Website-Audit.md</div>
+        <div class="f">Plan/03_Sitemap-Strategy.md</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="gate">
+    <div class="gate-label">Gate</div>
+    <div class="gate-text">Move forward only when positioning is clear, the goal is defined, the platform is documented, the main pages are justified, and the design direction is named.</div>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 6 — Sitemap, Copy, System ───────────── -->
+<section class="slide s06" data-screen-label="06 Sitemap, Copy, System">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Steps 2 &amp; 3 · Sitemap, Copy, System</span>
+    </div>
+    <span class="pageno">06 / 11</span>
+  </div>
+
+  <div>
+    <div class="step-tag">Steps 02 &amp; 03 / 06</div>
+    <h2 class="h-section">Three artifacts.<br>One alignment.</h2>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <div class="head"><span class="num">01</span> Sitemap</div>
+      <div class="body">
+        <p class="desc">Pages, sections, purpose, CTAs. Approved before copy.</p>
+        <div class="preview">
+          <div class="tree">
+            <div class="lvl0">/ Home</div>
+            <div class="lvl1">/ About</div>
+            <div class="lvl1">/ Services</div>
+            <div class="lvl1">/ Case studies</div>
+            <div class="lvl1">/ Contact</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="head"><span class="num">02</span> Copy</div>
+      <div class="body">
+        <p class="desc">Per-page Markdown. Approved or clearly marked <span class="code-chip">SAMPLE COPY</span>.</p>
+        <div class="preview">
+          <div class="copyblock">
+            <div class="h">Headline goes here.</div>
+            <div class="l"></div>
+            <div class="l"></div>
+            <div class="l short"></div>
+            <span class="pill">CTA · Approved</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="head"><span class="num">03</span> System</div>
+      <div class="body">
+        <p class="desc">Tokens, components, states, grid, references, anti-references.</p>
+        <div class="preview">
+          <div style="width:100%;">
+            <div class="swatches">
+              <div class="sw" style="background:#12222d"></div>
+              <div class="sw" style="background:#244159"></div>
+              <div class="sw" style="background:#e0ab58"></div>
+              <div class="sw" style="background:#fa9589"></div>
+              <div class="sw" style="background:#8cc1df"></div>
+            </div>
+            <div class="tokens">
+              <div class="tk"><span>Display</span><b>Abhaya Libre</b></div>
+              <div class="tk"><span>Body</span><b>Futura PT</b></div>
+              <div class="tk"><span>Radius</span><b>24 / D-shape</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-pill">
+    <span class="gold-bolt" style="background:var(--color-golden-shower)"></span>
+    Generation does not start until all three are aligned.
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 7 — Claude Setup ───────────── -->
+<section class="slide s07 dark" data-screen-label="07 Claude Setup">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" fill="#fff" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 4 · Claude Code Setup</span>
+    </div>
+    <span class="pageno">07 / 11</span>
+  </div>
+
+  <div class="header">
+    <div class="step-tag">Step 04 / 06</div>
+    <h2 class="h-section">Set up once.<br>Reuse forever.</h2>
+  </div>
+
+  <div class="panels">
+    <div class="panel">
+      <h3>Project context loaded</h3>
+      <div class="config-list">
+        <div class="it"><span class="gold-bolt"></span>brand-analysis</div>
+        <div class="it"><span class="gold-bolt"></span>website-audit</div>
+        <div class="it"><span class="gold-bolt"></span>sitemap.approved</div>
+        <div class="it"><span class="gold-bolt"></span>copy.approved</div>
+        <div class="it"><span class="gold-bolt"></span>design-system</div>
+        <div class="it"><span class="gold-bolt"></span>references</div>
+        <div class="it"><span class="gold-bolt"></span>platform</div>
+        <div class="it"><span class="gold-bolt"></span>folder-structure</div>
+        <div class="it"><span class="gold-bolt"></span>a11y-rules</div>
+        <div class="it"><span class="gold-bolt"></span>handoff-rules</div>
+      </div>
+    </div>
+    <div class="panel skills">
+      <h3>Skills activated</h3>
+      <div class="codeblock"><span class="comment"># activate before generating</span><br>&gt; activate <span class="skill-name">ui-ux-pro-max</span><br>&gt; activate <span class="skill-name">frontend-design</span><br><br><span class="comment"># follow approved sitemap, copy, brand,</span><br><span class="comment"># system, and platform constraints.</span><br><span class="comment"># prioritize accessibility &amp; clean code.</span></div>
+    </div>
+  </div>
+
+  <div class="policy">
+    <h3>Model policy</h3>
+    <div class="policy-rows">
+      <div class="policy-row sonnet">
+        <div class="tag">Sonnet</div>
+        <p>Planning, audits, copy, refactors, image prompts, mechanical work.</p>
+      </div>
+      <div class="policy-row opus">
+        <div class="tag">Opus</div>
+        <p>First critical visual, homepage refinement, UX/UI calls, accessibility audit, high-conversion pages.</p>
+      </div>
+    </div>
+    <div class="rule"><span class="gold-bolt"></span>Start on Sonnet. Escalate to Opus only when the decision warrants it.</div>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 8 — Generate & Refine ───────────── -->
+<section class="slide s08" data-screen-label="08 Generate & Refine">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 5 · Generation &amp; Refinement</span>
+    </div>
+    <span class="pageno">08 / 11</span>
+  </div>
+
+  <div>
+    <div class="step-tag">Step 05 / 06</div>
+    <h2 class="h-section">The homepage<br>sets the standard.</h2>
+  </div>
+
+  <div class="layout">
+    <div class="rows">
+      <div class="row gen">
+        <div class="step">Generate</div>
+        <div class="items">HTML &middot; CSS &middot; reusable components &middot; hover/focus states &middot; responsive behavior &middot; <span class="code-chip">IMAGE-PROMPTS.md</span></div>
+      </div>
+      <div class="row rev">
+        <div class="step">Review</div>
+        <div class="items">Hierarchy &middot; spacing rhythm &middot; responsiveness &middot; accessibility &middot; component consistency.</div>
+      </div>
+      <div class="row ref">
+        <div class="step">Refine</div>
+        <div class="items">Padding &middot; type sizes &middot; image crops &middot; CTAs &middot; breakpoints &middot; microinteractions.</div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div class="q1">Refine in code.</div>
+      <div class="q2">Not in Figma.</div>
+      <div class="meta">Step 5 · The non-negotiable</div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 9 — Skills & Consistency ───────────── -->
+<section class="slide s09" data-screen-label="09 Skills & Consistency">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Step 6 · Project Skills &amp; Consistency</span>
+    </div>
+    <span class="pageno">09 / 11</span>
+  </div>
+
+  <div class="header">
+    <div>
+      <div class="step-tag">Step 06 / 06</div>
+      <h2 class="h-section">Codify, then scale.</h2>
+    </div>
+  </div>
+
+  <div class="skill-cards">
+    <div class="skill dark">
+      <div class="name">&lt;project&gt;-design-system</div>
+      <h3>The implemented system, not the brand guide.</h3>
+      <p>Tokens · Type · Spacing · Color · Components · Hover &amp; focus states · Accessibility rules · Section patterns. Built from the refined homepage code.</p>
+    </div>
+    <div class="skill navy">
+      <div class="name">&lt;project&gt;-page-builder</div>
+      <h3>How to generate every page after the homepage.</h3>
+      <p>Uses the sitemap, page copy, the design-system skill, and the existing homepage patterns. Same standard, every page.</p>
+    </div>
+  </div>
+
+  <div class="order-strip">
+    <span class="lab">Page order</span>
+    <span class="pill"><span class="n">1</span>Main</span>
+    <span class="arr">→</span>
+    <span class="pill"><span class="n">2</span>Conversion</span>
+    <span class="arr">→</span>
+    <span class="pill"><span class="n">3</span>Institutional</span>
+    <span class="arr">→</span>
+    <span class="pill"><span class="n">4</span>Secondary</span>
+    <span class="arr">→</span>
+    <span class="pill"><span class="n">5</span>Support</span>
+  </div>
+
+  <div class="pull-pill">
+    <span class="gold-bolt"></span>
+    The refined homepage is the source of truth. If a skill disagrees with the code, update the skill.
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 10 — Risks ───────────── -->
+<section class="slide s10" data-screen-label="10 Risks & Mitigation">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Risks &amp; Mitigation</span>
+    </div>
+    <span class="pageno">10 / 11</span>
+  </div>
+
+  <div class="header">
+    <div>
+      <div class="step-tag">Six known failure modes</div>
+      <h2 class="h-section">Where projects break,<br>and how we hold the line.</h2>
+    </div>
+    <p class="head-sub">A gate, a file, or a sequencing rule — for every one.</p>
+  </div>
+
+  <div class="table">
+    <div class="thead">
+      <span></span>
+      <span class="lbl-r">Risk</span>
+      <span class="lbl-m">Mitigation</span>
+    </div>
+    <div class="row">
+      <span class="num">01</span>
+      <span class="risk">Copy changes after layout</span>
+      <span class="miti">Approve copy first, or mark <code>SAMPLE COPY</code></span>
+    </div>
+    <div class="row">
+      <span class="num">02</span>
+      <span class="risk">Context lost between sessions</span>
+      <span class="miti">Load <code>HANDOFF.md</code> at session start</span>
+    </div>
+    <div class="row">
+      <span class="num">03</span>
+      <span class="risk">Credit overspend</span>
+      <span class="miti">Sonnet for mechanics, Opus only for design calls</span>
+    </div>
+    <div class="row">
+      <span class="num">04</span>
+      <span class="risk">Inner pages before homepage refined</span>
+      <span class="miti">Refine homepage first, then codify into skills</span>
+    </div>
+    <div class="row">
+      <span class="num">05</span>
+      <span class="risk">Importing to Figma too early</span>
+      <span class="miti">Refine in code, import only when stable</span>
+    </div>
+    <div class="row">
+      <span class="num">06</span>
+      <span class="risk">Images without direction</span>
+      <span class="miti">Archive prompts in <code>IMAGE-PROMPTS.md</code></span>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────── SLIDE 11 — Delivery & Next ───────────── -->
+<section class="slide s11" data-screen-label="11 Delivery & Next Steps">
+  <div class="chrome">
+    <div class="brand">
+      <svg class="brand-bolt" viewBox="0 0 200 200"><path class="body" d="M100 0H0v200h100c55.228 0 100-44.772 100-100S155.228 0 100 0Z"/><path class="accent" d="M93.4 178.54V119.27H16.25L93.4 31.92v59.268h77.15L93.4 178.54Z"/></svg>
+      <span>Final delivery &amp; next steps</span>
+    </div>
+    <span class="pageno">11 / 11</span>
+  </div>
+
+  <div class="top">
+    <div>
+      <div class="step-tag">What ships, and what's next</div>
+      <h2 class="h-section">One playbook.<br>One clean handoff.</h2>
+    </div>
+    <div class="portrait-mini">
+      <div class="portrait-frame">
+        <img class="frame-img" src="assets/gold-frame.png" alt="">
+        <div class="portrait">
+          <img src="assets/humanimals/polar-bear.png" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <div class="col">
+      <h3>Delivery package</h3>
+      <div class="deliv">
+        <div class="item"><span class="ix">01</span>Live website — HTML / CSS / JS at a hosted URL</div>
+        <div class="item"><span class="ix">02</span>Final assets &amp; copy in Markdown</div>
+        <div class="item"><span class="ix">03</span>Figma — system, sitemap &amp; pages via HTML.to.design</div>
+        <div class="item"><span class="ix">04</span>Project skills in <span class="code-chip">.claude/skills/</span></div>
+      </div>
+    </div>
+    <div class="col">
+      <h3>Next</h3>
+      <div class="next">
+        <div class="item"><span class="gold-bolt"></span>Pilot on the next two website projects.</div>
+        <div class="item"><span class="gold-bolt"></span>Measure rework hours and credit spend, before / after.</div>
+        <div class="item"><span class="gold-bolt"></span>Review the playbook monthly. Update skills as we learn.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="closer">
+    Plan<span class="dot">.</span> Approve<span class="dot">.</span> Generate<span class="dot">.</span> Refine<span class="dot">.</span> Import<span class="gold-bolt"></span>
+  </div>
+</section>
+
+</deck-stage>
+
+<script src="deck-stage.js"></script>
+</body>
+</html>

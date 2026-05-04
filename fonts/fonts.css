@@ -1,0 +1,111 @@
+/* ──────────────────────────────────────────────────────────────
+   D&Z type stack — now fully bundled, no webfont imports.
+   • Abhaya Libre — display / headlines
+   • Futura (Cyrillic cut — covers Latin + Cyrillic glyphs)
+     — body, UI, labels
+   ────────────────────────────────────────────────────────────── */
+
+/* ── Abhaya Libre ── */
+@font-face {
+  font-family: 'Abhaya Libre';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./AbhayaLibre-Regular.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Abhaya Libre';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./AbhayaLibre-Medium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Abhaya Libre';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./AbhayaLibre-SemiBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Abhaya Libre';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./AbhayaLibre-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Abhaya Libre';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('./AbhayaLibre-ExtraBold.ttf') format('truetype');
+}
+
+/* ── Futura PT (using bundled Futura Cyrillic cut) ──
+   Exposed under two families so existing CSS keeps working:
+   'Futura PT' (matches D&Z's own naming) and 'Futura'. */
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('./FuturaCyrillicLight.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('./FuturaCyrillicBook.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('./FuturaCyrillicMedium.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('./FuturaCyrillicDemi.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('./FuturaCyrillicBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('./FuturaCyrillicExtraBold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('./FuturaCyrillicHeavy.ttf') format('truetype');
+}
+
+/* Also aliased as plain 'Futura' for any code that uses that name. */
+@font-face { font-family: 'Futura'; font-weight: 300; font-display: swap; src: url('./FuturaCyrillicLight.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 400; font-display: swap; src: url('./FuturaCyrillicBook.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 500; font-display: swap; src: url('./FuturaCyrillicMedium.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 600; font-display: swap; src: url('./FuturaCyrillicDemi.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 700; font-display: swap; src: url('./FuturaCyrillicBold.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 800; font-display: swap; src: url('./FuturaCyrillicExtraBold.ttf') format('truetype'); }
+@font-face { font-family: 'Futura'; font-weight: 900; font-display: swap; src: url('./FuturaCyrillicHeavy.ttf') format('truetype'); }
+
+:root {
+  --font-display: 'Abhaya Libre', Georgia, serif;
+  --font-body: 'Futura PT', 'Futura', 'Century Gothic', system-ui, sans-serif;
+  --font-label: 'Futura PT', 'Futura', 'Century Gothic', system-ui, sans-serif;
+}

@@ -1,0 +1,159 @@
+/* ──────────────────────────────────────────────────────────────
+   Dingus & Zazzy — color + type tokens
+   Colors use D&Z's own (cheeky) names. Semantic aliases below.
+   ────────────────────────────────────────────────────────────── */
+
+@import url('./fonts/fonts.css');
+
+:root {
+  /* ── Brand colors — named the way D&Z named them ── */
+  --color-dark-af: #12222d;            /* near-black navy */
+  --color-navy: #244159;               /* deep navy */
+  --color-light-af: #e5f2f9;           /* pale sky — primary bg */
+  --color-anti-racist-white: #ffffff;  /* white */
+  --color-golden-shower: #e0ab58;      /* brand gold accent */
+  --color-baby-blue-ballz: #8cc1df;    /* supporting blue */
+  --color-pinky-two: #fa9589;          /* coral */
+
+  /* Support / secondary surfaces seen in the brand guide */
+  --color-forest: #3a4946;             /* muted teal-green surface */
+  --color-forest-2: #5a726e;
+  --color-brown-deep: #593105;         /* frame/shadow brown */
+  --color-cream: #ffe5de;              /* pale coral tint */
+  --color-mint: #a1c9c1;               /* seafoam */
+
+  /* ── Semantic ── */
+  --bg: var(--color-light-af);
+  --bg-alt: var(--color-anti-racist-white);
+  --bg-invert: var(--color-dark-af);
+  --bg-accent: var(--color-golden-shower);
+  --bg-forest: var(--color-forest);
+
+  --fg: var(--color-dark-af);
+  --fg-muted: var(--color-navy);
+  --fg-invert: var(--color-anti-racist-white);
+  --fg-accent: var(--color-golden-shower);
+
+  --border: rgba(18,34,45,0.15);
+  --border-strong: var(--color-dark-af);
+  --focus-ring: var(--color-golden-shower);
+
+  /* ── Radii — keep friendly (>=8px per guidelines) ── */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 32px;
+  --radius-pill: 999px;
+  /* Signature D-shape: flat on left, rounded on right */
+  --radius-d: 0 999px 999px 0;
+
+  /* ── Spacing — 5px base grid, scale 1,2,2.4,3,4,6,8,10 ── */
+  --space-1: 5px;
+  --space-2: 10px;
+  --space-2-4: 12px;
+  --space-3: 15px;
+  --space-4: 20px;
+  --space-6: 30px;
+  --space-8: 40px;
+  --space-10: 50px;
+  --space-14: 70px;
+  --space-20: 100px;
+
+  /* ── Shadows — used sparingly ── */
+  --shadow-sm: 0 1px 2px rgba(18,34,45,0.06);
+  --shadow-md: 0 4px 12px rgba(18,34,45,0.08);
+  --shadow-lift: 0 12px 32px -8px rgba(18,34,45,0.18);
+
+  /* ── Type tokens ── */
+  --font-display: 'Abhaya Libre', Georgia, serif;
+  --font-body: 'Futura PT', 'Futura', 'Century Gothic', system-ui, sans-serif;
+  --font-label: 'Futura PT', 'Futura', 'Century Gothic', system-ui, sans-serif;
+
+  /* Size scale (body ~16, headlines up to massive editorial sizes) */
+  --fs-xs: 12px;
+  --fs-sm: 14px;
+  --fs-base: 16px;
+  --fs-md: 18px;
+  --fs-lg: 20px;
+  --fs-xl: 24px;
+  --fs-2xl: 32px;
+  --fs-3xl: 40px;
+  --fs-4xl: 56px;
+  --fs-hero: 72px;
+  --fs-mega: 124px;
+
+  /* Line heights */
+  --lh-tight: 1;
+  --lh-snug: 1.1;
+  --lh-normal: 1.25;
+  --lh-relaxed: 1.4;
+  --lh-loose: 1.6;
+}
+
+/* ── Semantic element styles ── */
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  line-height: var(--lh-loose);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(48px, 7vw, 124px);
+  line-height: var(--lh-tight);
+  letter-spacing: -0.01em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(40px, 5vw, 80px);
+  line-height: var(--lh-snug);
+  color: var(--fg);
+  text-wrap: balance;
+}
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-3xl);
+  line-height: var(--lh-snug);
+  color: var(--fg);
+}
+.eyebrow {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-md);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--fg-accent);
+}
+p, .body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: var(--fs-md);
+  line-height: var(--lh-loose);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+.body-lg {
+  font-size: var(--fs-lg);
+  line-height: 1.5;
+}
+.label, label {
+  font-family: var(--font-label);
+  font-weight: 500;
+  font-size: var(--fs-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--fg-muted);
+}
+.caption {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  color: var(--fg-muted);
+}
