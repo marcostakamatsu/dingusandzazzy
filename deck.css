@@ -159,7 +159,7 @@ section.slide {
 }
 .portrait-frame .portrait {
   position: absolute;
-  inset: 12% 12% 12% 12%;
+  inset: 11% 14.5% 11% 11%;
   background: linear-gradient(180deg, #233045 0%, #12222d 100%);
   overflow: hidden;
 }
