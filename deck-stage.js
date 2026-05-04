@@ -535,10 +535,10 @@
       }
       const vw = window.innerWidth;
       const vh = window.innerHeight;
-      // Cover: scale up until both axes fill the viewport. The canvas is
-      // overflow:hidden via :host, so any excess is clipped — preferred
-      // over letterboxing for a true full-screen feel.
-      const s = Math.max(vw / this.designWidth, vh / this.designHeight);
+      // Contain with a 40px breathing margin top and bottom so content
+      // never butts up against the viewport edges.
+      const verticalMargin = 80;
+      const s = Math.min(vw / this.designWidth, (vh - verticalMargin) / this.designHeight);
       this._canvas.style.transform = `scale(${s})`;
     }
 
