@@ -153,6 +153,9 @@ section.slide {
   display: block;
   width: 100%;
   height: auto;
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
 }
 .portrait-frame .portrait {
   position: absolute;
